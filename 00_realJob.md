@@ -96,11 +96,29 @@ Let me know if you need further assistance!
 
 ## Step 1: Start Minikube
 
-If you haven’t already, start your Minikube cluster:
+To start Minikube, follow these steps:
 
-```bash
-minikube start
-```
+1. **Open your terminal** (Command Prompt, PowerShell, or Terminal).
+
+2. **Run the following command**:
+
+   ```bash
+   minikube start
+   ```
+
+This command initializes your local Kubernetes cluster. It may take a few moments to download the necessary images and start the cluster.
+
+3. **Check the status** (optional):
+
+   After Minikube starts, you can verify the status by running:
+
+   ```bash
+   minikube status
+   ```
+
+You should see information about the cluster, including its components and whether they are running.
+
+Let me know if you need help with anything else!
 
 ## Step 2: Deploy Prometheus
 
