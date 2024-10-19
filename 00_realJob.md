@@ -1,7 +1,90 @@
 
 # Setting Up Prometheus as a Data Source for Grafana in Minikube
 
-This README provides a step-by-step guide to set up Prometheus as a data source for Grafana in a Minikube environment using GitHub Codespaces.
+Setting up Prometheus as a data source for Grafana in Minikube involves a few steps. Here’s a simplified guide to get you started:
+
+### Step 1: Start Minikube
+
+If you haven't already started Minikube, do so with:
+
+```bash
+minikube start
+```
+
+### Step 2: Install Helm (if not installed)
+
+Helm is a package manager for Kubernetes. You can install it using the following command:
+
+```bash
+curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+```
+
+### Step 3: Add the Prometheus Community Helm Chart Repository
+
+```bash
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
+```
+
+### Step 4: Install Prometheus
+
+You can install Prometheus using Helm:
+
+```bash
+helm install prometheus prometheus-community/prometheus
+```
+
+This will create a Prometheus instance in your Minikube cluster.
+
+### Step 5: Install Grafana
+
+Now, install Grafana using Helm:
+
+```bash
+helm install grafana grafana/grafana
+```
+
+### Step 6: Access Grafana
+
+To access Grafana, first, get the admin password:
+
+```bash
+kubectl get secret --namespace default grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+```
+
+Then, you can access Grafana using a port-forward:
+
+```bash
+kubectl port-forward svc/grafana 3000:80
+```
+
+Open your browser and navigate to `http://localhost:3000`. Use `admin` as the username and the password you just retrieved.
+
+### Step 7: Add Prometheus as a Data Source in Grafana
+
+1. **Log in to Grafana**.
+2. Go to **Configuration** (the gear icon) on the left sidebar and click on **Data Sources**.
+3. Click on **Add data source**.
+4. Select **Prometheus** from the list.
+5. In the **HTTP URL** field, enter:
+
+   ```
+   http://prometheus-server:80
+   ```
+
+6. Click **Save & Test** to verify the connection.
+
+### Step 8: Create Dashboards
+
+Now you can start creating dashboards in Grafana using the data from Prometheus!
+
+### Troubleshooting Tips
+
+- If you have trouble accessing services, ensure that Minikube is running properly.
+- Use `kubectl get pods` to check the status of your pods.
+- Ensure you have sufficient resources allocated to Minikube.
+
+Let me know if you need further assistance!
 
 ## Prerequisites
 
